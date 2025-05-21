@@ -1,0 +1,206 @@
+\documentclass{ltxdoc}
+\input{preamble.tex}
+\usepackage{shortvrb}
+\MakeShortVerb{\|} % Short verb, use |something| instead of \verb|something|
+
+\title{TheFire888's \LaTeX\ Cheatsheet}
+\author{\textit{luanleal@usp.br}}
+\date{}
+
+\begin{document}
+\maketitle
+
+Esse \textit{cheatsheet} assume que você está usando meu
+\texttt{preamble.tex}. Se você não sabe onde achar esse documento, me
+mande um email.
+
+\section{O pacote \texttt{siunitx}}
+O pacote \texttt{siunitx} é uma ferramenta indispensável no LaTeX para
+formatação precisa de unidades, valores numéricos e grandezas
+científicas, seguindo as convenções do Sistema Internacional (SI). O
+ponto chave desse pacote é a forma consistente e profissional de
+formatar unidades e números, o próprio autor do pacote afirma:
+``\textit{In this way, users can use siunitx to follow the
+    requirements of publishers, co-authors, universities etc. without
+    needing to alter the input at all.}''. Vejamos seus usos:
+
+\subsection{Unidades}
+A macro principal para unidades é |\qty{}{}|, mas o pacote também tem
+macros como |\qtylist{}{}|, |\qtyrange{}{}{}| e
+|\unit{}|. \\
+
+\DescribeMacro{\qty{}{}} Uso: |\qty{number}{unit}|
+
+Essa será a macro que você mais deverá utilizar dessa
+biblioteca, ela permite combinar um valor numérico e uma unidade. Você
+pode usar |\pm| para indicar incertezas; |\squared| para elevar a
+unidade que precede o comando ao quadrado; |\cubic| para elevar a
+unidade que sucede o comando ao cubo. Note que a diferença entre
+|\squared| e |\cubic| se deve a forma como essas expressões são
+escritas em inglês. Para te poupar tempo explicando outras macros,
+veja alguns exemplos na \cref{xpqty}.
+
+\begin{table}[!htb]
+\caption{Exemplos de uso do \texttt{\textbackslash qty}}\label{xpqty}
+\centering
+\begin{tabular}{l c}
+\toprule
+Comando & Resultado \\
+\midrule
+|\qty{2.5}{\milli\mol}| & \qty{2.5}{\milli\mol} \\
+|\qty{9.81}{\meter\per\second\squared}| & \qty{9.81}{\meter\per\second\squared} \\
+|\qty{1.21\pm0.12}{\kilo\gram\cubic\meter\per\second}| &
+\qty{1.21\pm0.12}{\kilo\gram\cubic\meter\per\second} \\
+|\qty{300}{\kilo\meter\per\hour}| & \qty{300}{\kilo\meter\per\hour} \\
+|\qty{1.4}{\mega\pascal\squared}| & \qty{1.4}{\mega\pascal\squared} \\
+|\qty{5.0e-3}{\newton\per\meter}| & \qty{5.0e-3}{\newton\per\meter} \\
+|\qty{22.4\pm0.02}{\liter\per\mol}| & \qty{22.4\pm0.02}{\liter\per\mol} \\
+|\qty{21}{\kg}| & \qty{21}{\kg}\\
+|\qty{0.2}{\ul}| & \qty{0.2}{\ul}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Agora, o leitor deve se perguntar sobre todas as outras macros
+disponibilizadas por esse pacote para especificar unidades. Nesse
+caso, recomendo a leitura da documentação que acompanha esse pacote no
+CTAN. Inclusive, recomendo ao leitor que SEMPRE procure no CTAN quando
+surgir uma dúvida sobre o uso de um pacote no \LaTeX, isso irá te
+economizar muito tempo em fóruns.\\
+
+\DescribeMacro{\qtylist} Uso: |\qtylist{n1;n2;...}{unit}|
+
+Essa macro serve unicamente para expressar listas de números seguidos
+de unidades. Seu uso se assemelha ao uso de |\qty|. Veja alguns
+exemplos na \cref{xpqtylist}.\\
+
+\begin{table}[!htb]
+\caption{Exemplos de uso do \texttt{\textbackslash qtylist}}\label{xpqtylist}
+\centering
+\begin{tabular}{l c}
+\toprule
+Comando & Resultado \\
+\midrule
+|\qtylist{1;2;3}{\ul}| & \qtylist{1;2;3}{\ul} \\
+|\qtylist{2.5\pm0.4;1.2\pm0.2}{\astronomicalunit}| &
+\qtylist{2.5\pm0.4;1.2\pm0.2}{\astronomicalunit} \\
+|\qtylist{0.5;1.0;1.5}{\weber}| & \qtylist{0.5;1.0;1.5}{\weber} \\
+|\qtylist{-10;0;25;100}{\celsius}| & \qtylist{-10;0;25;100}{\celsius} \\
+|\qtylist{273.15;300;500}{\kelvin}| & \qtylist{273.15;300;500}{\kelvin} \\
+|\qtylist{1000;2000;5000}{\dalton}| & \qtylist{1000;2000;5000}{\dalton} \\
+|\qtylist{1.2\pm0.1;3.4\pm0.2}{\tesla}| & \qtylist{1.2\pm0.1;3.4\pm0.2}{\tesla} \\
+|\qtylist{5;10;15}{\mmHg}| & \qtylist{5;10;15}{\mmHg} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\DescribeMacro{\qtyrange} Uso: |\qtyrange{n1}{n2}{unit}|
+
+Essa macro serve para expressar intervalos de números seguidos de
+unidades. Seu uso também se assemelha ao uso de |\qty|. Veja alguns
+exemplos na \cref{xpqtyrange}.
+
+\begin{table}[!htb]
+\caption{Exemplos de uso do \texttt{\textbackslash qtyrange} com incertezas}\label{xpqtyrange}
+\centering
+\begin{tabular}{l c}
+\toprule
+Comando & Resultado \\
+\midrule
+|\qtyrange{15.2\pm0.3}{25.7\pm0.5}{\percent}| & \qtyrange{15.2\pm0.3}{25.7\pm0.5}{\percent} \\
+|\qtyrange{1.25\pm0.01}{2.50\pm0.02}{\milli\mole}| & \qtyrange{1.25\pm0.01}{2.50\pm0.02}{\milli\mole} \\
+|\qtyrange{3.0\pm0.2}{5.0\pm0.3}{\kilo\newton}| & \qtyrange{3.0\pm0.2}{5.0\pm0.3}{\kilo\newton} \\
+|\qtyrange{100\pm5}{200\pm10}{\lux}| & \qtyrange{100\pm5}{200\pm10}{\lux} \\
+|\qtyrange{0.5\pm0.1}{1.5\pm0.2}{\becquerel}| & \qtyrange{0.5\pm0.1}{1.5\pm0.2}{\becquerel} \\
+|\qtyrange{2.4\pm0.1}{3.6\pm0.2}{\electronvolt}| & \qtyrange{2.4\pm0.1}{3.6\pm0.2}{\electronvolt} \\
+|\qtyrange{0.8\pm0.05}{1.2\pm0.08}{\gray\per\second}| & \qtyrange{0.8\pm0.05}{1.2\pm0.08}{\gray\per\second} \\
+|\qtyrange{50\pm2}{100\pm5}{\siemens\per\centi\meter}| & \qtyrange{50\pm2}{100\pm5}{\siemens\per\centi\meter} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\DescribeMacro{\unit} Uso: |\unit{unit}|
+
+Em alguns casos especiais, você pode querer expressar unidades
+sozinhas. Nesses casos, você pode usar essa macro. Veja alguns
+exemplos na \cref{xpunit}.
+
+\begin{table}[!htb]
+\caption{Exemplos de uso do \texttt{\textbackslash unit}}\label{xpunit}
+\centering
+\begin{tabular}{l c}
+\toprule
+Comando & Resultado \\
+\midrule
+|\unit{\meter\per\second}| & \unit{\meter\per\second} \\
+|\unit{\kilo\gram\cdot\meter\squared}| & \unit{\kilo\gram\cdot\meter\squared} \\
+|\unit{\micro\mol\per\liter}| & \unit{\micro\mol\per\liter} \\
+|\unit{\ohm\cdot\meter}| & \unit{\ohm\cdot\meter} \\
+|\unit{\degreeCelsius}| & \unit{\degreeCelsius} \\
+|\unit{\newton\second}| & \unit{\newton\second} \\
+|\unit{\farad\per\meter}| & \unit{\farad\per\meter} \\
+|\unit{\becquerel}| & \unit{\becquerel} \\
+|\unit{\henry\per\second}| & \unit{\henry\per\second} \\
+|\unit{\pascal\second}| & \unit{\pascal\second} \\
+|\unit{\joule\per\kelvin}| & \unit{\joule\per\kelvin} \\
+|\unit{\watt\per\square\meter}| & \unit{\watt\per\square\meter} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{O pacote \texttt{amsmath}}
+O pacote |amsmath| é a referência padrão para formatação de conteúdo
+matemático em LaTeX, desenvolvido pela American Mathematical Society
+(AMS). Ele fornece estruturas avançadas para escrita matemática
+profissional, sendo amplamente adotado em publicações acadêmicas,
+livros técnicos e artigos científicos. Em geral, vamos utilizar esse
+pacote junto ao pacote |amssymb|, de forma que esse guia não fará
+distinção desses pacotes. Se for do seu interesse fazer tal distinção,
+consulte o CTAN.
+
+Entre suas principais funcionalidades estão os ambientes |align|, |gather| e |multline|, que permitem criar equações alinhadas, agrupadas ou com quebras de linha, respectivamente. O ambiente |align| é particularmente útil para alinhar múltiplas equações em pontos específicos, como sinais de igual, usando o caractere |&| como marcador de alinhamento. Além disso, |amsmath| introduz comandos como |\intertext{}| para inserir texto entre equações sem perturbar o alinhamento, e |\tag{}| para personalizar a numeração de equações. O pacote também inclui ambientes especializados para matrizes, como |matrix|, |pmatrix| e |bmatrix|, que simplificam a criação de matrizes com diferentes delimitadores.
+\\
+
+
+\DescribeEnv{align} Esse ambiente permite escrever equações com
+alinhamento vertical preciso. Ele permite alinhar múltiplas equações
+em relação a um ponto específico (geralmente o sinal de igual) usando
+o caractere |&| como marcador de alinhamento. Cada linha é
+automaticamente numerada, exceto quando se usa |align*|, no lugar de
+|align|.
+
+Vejamos um exemplo de equação:\\
+\begin{minipage}{0.3\textwidth}
+\begin{verbatim}
+\begin{align}
+    f(x) &= x^2 + 2x \\
+         &= x (x + 2)
+\end{align}
+\end{verbatim}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+\begin{align}
+    f(x) &= x^2 + 2x \\
+         &= x (x + 2)
+\end{align}
+\end{minipage}\\
+
+Um resultado parecido poderia ser obtido por uso do |align*|, nesse
+caso as linhas não serão numeradas:\\
+
+\begin{minipage}{0.3\textwidth}
+\begin{verbatim}
+\begin{align*}
+    f(x) &= x^2 + 2x \\
+         &= x (x + 2)
+\end{align*}
+\end{verbatim}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+\begin{align*}
+    f(x) &= x^2 + 2x \\
+         &= x (x + 2)
+\end{align*}
+\end{minipage}\\
+
+\end{document}
